@@ -1,0 +1,56 @@
+# Prototype Pulse Train Definition File for Puddle 0
+# Kevin Godden 11/2019.
+
+# Output names are micro-controller dependent
+
+# This output triggers the light
+output light_trigger_op:
+    target: PORTB.0
+    initial_state: high
+    
+# This output triggers the left camera
+output left_camera_trigger_op:
+    target: PORTB.1
+    initial_state: low
+
+    
+    
+# Define the pulse that will drive the
+# lights, the lights are triggered
+# by a level trigger that's Active Low
+#
+pulse light_pulse:
+    output : light_trigger_op
+    active : 2000us
+    sense  : active_low
+
+# The pulse that will trigger the camera
+# the camera is edge triggered, active high
+#
+pulse camera_pulse:
+    output : left_camera_trigger_op
+    active : 1000us
+    sense  : active_high
+    
+# We trigger the lights at 40Hz    
+pulse_train lights:
+    pulse: light_pulse
+    frequency: 40Hz
+    offset: 0us
+
+# The 'bright' camera triggers, camera
+# is triggered when light is on
+pulse_train camera_bright:
+    pulse: p1
+    frequency: 10
+    offset: 0us
+    
+# The 'dark' camera triggers, camera
+# is triggered when light is off
+pulse_train camera_dark:
+    pulse: p1
+    frequency: 10
+    offset: 5000us
+    
+    
+        
