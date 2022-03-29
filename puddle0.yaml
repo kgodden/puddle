@@ -1,0 +1,60 @@
+
+outputs:
+    - light_triggerer_op:
+        target: PORRTB0.0
+        initial_state: high
+    - left_camera_trigger_op:
+        target: PORRTB0.1
+        initial_state: low
+    - right_camera_trigger_op:
+        target: PORRTB0.2
+        initial_state: low
+    - colour_camera_trigger_op:
+        target: PORRTB0.3
+        initial_state: low
+        
+pulses: 
+    - light_triggers:
+        outputs: [light_trigger_op]
+        active: 2000us
+        sense: active_low
+        period: 50000us
+        offset: 0us
+    - bright_left_camera_triggers:
+        outputs: [left_camera_trigger_op]
+        active: 1000us
+        sense: active_high
+        period: 10000us
+        offset: 1000us
+    - bright_right_camera_triggers:
+        outputs: [right_camera_trigger_op]
+        active: 1000us
+        sense: active_high
+        period: 10000us
+        offset: 1000us
+    - dark_left_camera_triggers:
+        outputs: [dark_camera_trigger_op]
+        active: 1000us
+        sense: active_high
+        period: 10000us
+        offset: 3000us
+    - dark_right_camera_triggers:
+        outputs: [dark_camera_trigger_op]
+        active: 1000us
+        sense: active_high
+        period: 10000us
+        offset: 3000us
+    - colour_right_camera_triggers:
+        outputs: [colour_camera_trigger_op]
+        active: 1000us
+        sense: active_high
+        period: 10000us
+        offset: 6000us
+        
+profiles:
+    - firing:
+        pulses: [light_triggers, bright_left_camera_triggers, bright_right_camera_triggers, dark_left_camera_triggers, dark_right_camera_triggers, colour_right_camera_triggers]
+        
+boot:
+    boot_profile: firing
+        
